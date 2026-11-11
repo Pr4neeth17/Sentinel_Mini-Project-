@@ -1,0 +1,19 @@
+# Dependencies and build output
+node_modules
+dist
+*.tsbuildinfo
+*.log
+
+# Environment files: never committed. The app runs without any (see README).
+.env
+.env.*
+
+# Local editor / assistant tooling
+.claude/
+.agents/
+.taste-skill/
+skills-lock.json
+
+# College review material (kept locally, not part of the code)
+*.pptx
+*.pdf

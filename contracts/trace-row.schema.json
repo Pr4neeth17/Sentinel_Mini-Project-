@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pi-harness/trace-row",
+  "title": "TraceRow",
+  "description": "One recorded run, step by step. One JSON object per line in traces.jsonl.",
+  "type": "object",
+  "required": ["run_id", "task", "defense", "family", "outcome", "steps"],
+  "properties": {
+    "run_id": { "type": "string" },
+    "task": { "type": "string" },
+    "defense": { "type": "string" },
+    "family": { "type": ["string", "null"] },
+    "outcome": {
+      "type": "string",
+      "description": "Known values: attack_succeeded, blocked, benign_ok, task_failed. Other strings are shown as-is."
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["role"],
+        "properties": {
+          "role": { "type": "string", "description": "user | agent | tool | system" },
+          "text": { "type": "string" },
+          "call": {
+            "type": "object",
+            "required": ["name", "args"],
+            "properties": {
+              "name": { "type": "string" },
+              "args": { "type": "object" }
+            }
+          },
+          "inj": { "type": "string", "description": "Exact injected substring inside text. Highlighted yellow in the UI." },
+          "flag": { "enum": ["attack", "blocked"], "description": "attack = the attacker's action ran; blocked = a defense stopped it." },
+          "note": { "type": "string", "description": "Why it was flagged, shown under the step." }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}

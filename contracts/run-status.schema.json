@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pi-harness/run-status",
+  "title": "RunStatus",
+  "description": "Response of GET /api/runs/{id}/status. The run is finished when done >= total and total > 0.",
+  "type": "object",
+  "required": ["done", "total"],
+  "properties": {
+    "done": { "type": "integer", "minimum": 0 },
+    "total": { "type": "integer", "minimum": 0 }
+  }
+}

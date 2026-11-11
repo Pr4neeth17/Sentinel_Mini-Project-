@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pi-harness/result-row",
+  "title": "ResultRow",
+  "description": "One evaluated run. One JSON object per line in results.jsonl. attack_family = null means a benign run.",
+  "type": "object",
+  "required": ["task_id", "defense", "model", "attack_family", "attack_success", "task_success", "blocked"],
+  "properties": {
+    "task_id": { "type": "string", "examples": ["banking/user_task_7+injection_task_1", "workspace/user_task_21"] },
+    "defense": {
+      "type": "string",
+      "description": "Canonical ids: none, D1_delimit, D2_separate, D3_validate, D4_provenance, D5_filter, layered. Other strings are shown as-is.",
+      "examples": ["none", "D3_validate", "layered"]
+    },
+    "model": { "type": "string", "examples": ["qwen2.5-7b-instruct", "gpt-4o-mini"] },
+    "attack_family": {
+      "type": ["string", "null"],
+      "description": "null for benign runs. Known families: naive, context_ignore, fake_completion, combined."
+    },
+    "attack_success": { "type": "boolean", "description": "The attacker's goal was executed (a tool call with real effect). Always false on benign rows." },
+    "task_success": { "type": "boolean", "description": "The user's real task was completed." },
+    "blocked": { "type": "integer", "minimum": 0, "description": "Number of tool calls or inputs the defense stopped in this run." }
+  },
+  "additionalProperties": true
+}
